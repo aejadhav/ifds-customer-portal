@@ -28,10 +28,10 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(credentials: { mobile?: string; email?: string; password: string }) {
     loading.value = true
     try {
-      const { data } = await api.post('/auth/customer/login', credentials)
-      token.value = data.token
-      customer.value = data.customer
-      localStorage.setItem('customer_token', data.token)
+      const { data } = await api.post('/auth/login', credentials)
+      token.value = data.access_token
+      customer.value = data.user
+      localStorage.setItem('customer_token', data.access_token)
     } finally {
       loading.value = false
     }
@@ -41,22 +41,23 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     try {
       const { data } = await api.post('/auth/customer/verify-otp', { mobile, otp })
-      token.value = data.token
-      customer.value = data.customer
-      localStorage.setItem('customer_token', data.token)
+      token.value = data.access_token
+      customer.value = data.user
+      localStorage.setItem('customer_token', data.access_token)
     } finally {
       loading.value = false
     }
   }
 
   async function fetchProfile() {
-    const { data } = await api.get('/customers/me')
-    customer.value = data.data
+    // Uses /auth/me for now; swap to /customers/me once customer profile is linked
+    const { data } = await api.get('/auth/me')
+    customer.value = data.user
   }
 
   async function logout() {
     try {
-      await api.post('/auth/logout')
+      await api.post('/auth/logout') // same endpoint for all roles
     } catch {
       // ignore
     } finally {
