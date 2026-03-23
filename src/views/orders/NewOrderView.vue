@@ -116,7 +116,7 @@
       <p class="text-xs text-gray-400">You'll receive notifications as your order progresses.</p>
       <div class="flex gap-3 justify-center mt-4">
         <router-link :to="`/orders/${placedOrder?.id}`" class="btn-primary text-sm">Track Order</router-link>
-        <router-link to="/" class="btn-secondary text-sm">Dashboard</router-link>
+        <router-link to="/app" class="btn-secondary text-sm">Dashboard</router-link>
       </div>
     </div>
   </div>

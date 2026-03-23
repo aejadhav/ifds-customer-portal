@@ -5,6 +5,13 @@ const router = createRouter({
   history: createWebHistory(),
   scrollBehavior: () => ({ top: 0 }),
   routes: [
+    // Public landing page
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('@/views/HomeView.vue'),
+    },
+
     // Auth routes (no layout)
     {
       path: '/login',
@@ -27,7 +34,7 @@ const router = createRouter({
 
     // Authenticated app routes
     {
-      path: '/',
+      path: '/app',
       component: () => import('@/layouts/AppLayout.vue'),
       meta: { requiresAuth: true },
       children: [
@@ -112,7 +119,7 @@ router.beforeEach(async (to) => {
   }
 
   if (to.meta.guest && auth.isAuthenticated) {
-    return { name: 'dashboard' }
+    return '/app'
   }
 })
 

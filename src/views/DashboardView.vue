@@ -25,7 +25,7 @@
       <div class="stat-card">
         <p class="stat-label">Outstanding</p>
         <p class="stat-value text-red-600">₹{{ shortAmount(auth.customer?.outstanding_balance) }}</p>
-        <router-link to="/payments/pay" class="text-xs text-primary-600 font-semibold mt-2 inline-block hover:underline">Pay now →</router-link>
+        <router-link to="/app/payments/pay" class="text-xs text-primary-600 font-semibold mt-2 inline-block hover:underline">Pay now →</router-link>
       </div>
 
       <div class="stat-card">
@@ -59,7 +59,7 @@
     <div>
       <div class="flex items-center justify-between mb-3">
         <h2 class="section-heading">Active Orders</h2>
-        <router-link to="/orders" class="text-sm text-primary-600 font-semibold hover:underline">View all →</router-link>
+        <router-link to="/app/orders" class="text-sm text-primary-600 font-semibold hover:underline">View all →</router-link>
       </div>
 
       <div v-if="ordersStore.loading" class="space-y-3">
@@ -71,7 +71,7 @@
           <span class="text-2xl">📦</span>
         </div>
         <p class="text-gray-500 text-sm font-medium">No active orders right now</p>
-        <router-link to="/orders/new" class="btn-primary mt-4 text-sm">Place Your First Order</router-link>
+        <router-link to="/app/orders/new" class="btn-primary mt-4 text-sm">Place Your First Order</router-link>
       </div>
 
       <div v-else class="space-y-3">
@@ -126,10 +126,10 @@ const timeOfDay = computed(() => {
 const monthlyOrders = computed(() => ordersStore.activeOrders.length)
 
 const quickActions = [
-  { to: '/orders/new',    label: 'New Order',   icon: '⛽', iconBg: 'bg-blue-50' },
-  { to: '/payments/pay',  label: 'Pay Bills',   icon: '💳', iconBg: 'bg-green-50' },
-  { to: '/orders',        label: 'Track Order', icon: '🚛', iconBg: 'bg-amber-50' },
-  { to: '/reports',       label: 'Reports',     icon: '📊', iconBg: 'bg-purple-50' },
+  { to: '/app/orders/new',    label: 'New Order',   icon: '⛽', iconBg: 'bg-blue-50' },
+  { to: '/app/payments/pay',  label: 'Pay Bills',   icon: '💳', iconBg: 'bg-green-50' },
+  { to: '/app/orders',        label: 'Track Order', icon: '🚛', iconBg: 'bg-amber-50' },
+  { to: '/app/reports',       label: 'Reports',     icon: '📊', iconBg: 'bg-purple-50' },
 ]
 
 function shortAmount(val?: number) {

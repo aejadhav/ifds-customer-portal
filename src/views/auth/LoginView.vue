@@ -196,7 +196,7 @@ async function handleLogin() {
     } else {
       await auth.loginWithOtp(form.value.mobile, form.value.otp)
     }
-    router.push((route.query.redirect as string) || '/')
+    router.push((route.query.redirect as string) || '/app')
   } catch (e: any) {
     error.value = e.response?.data?.message || 'Invalid credentials. Please try again.'
   } finally {

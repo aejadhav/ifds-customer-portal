@@ -33,18 +33,18 @@
 
       <!-- Nav Links -->
       <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        <SidebarLink to="/" :active="route.name === 'dashboard'" icon="home" label="Dashboard" />
-        <SidebarLink to="/orders" :active="String(route.name).startsWith('orders')" icon="package" label="Orders" />
-        <SidebarLink to="/payments" :active="String(route.name).startsWith('payments')" icon="credit-card" label="Payments" />
-        <SidebarLink to="/reports" :active="route.name === 'reports'" icon="bar-chart" label="Reports" />
+        <SidebarLink to="/app" :active="route.name === 'dashboard'" icon="home" label="Dashboard" />
+        <SidebarLink to="/app/orders" :active="String(route.name).startsWith('orders')" icon="package" label="Orders" />
+        <SidebarLink to="/app/payments" :active="String(route.name).startsWith('payments')" icon="credit-card" label="Payments" />
+        <SidebarLink to="/app/reports" :active="route.name === 'reports'" icon="bar-chart" label="Reports" />
 
         <div class="pt-4 pb-1 px-3">
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Account</p>
         </div>
-        <SidebarLink to="/profile" :active="route.name === 'profile'" icon="user" label="My Profile" />
-        <SidebarLink to="/profile/locations" :active="route.name === 'profile-locations'" icon="map-pin" label="Delivery Locations" />
-        <SidebarLink to="/profile/notifications" :active="route.name === 'profile-notifications'" icon="bell" label="Notifications" />
-        <SidebarLink to="/support" :active="route.name === 'support'" icon="help" label="Support" />
+        <SidebarLink to="/app/profile" :active="route.name === 'profile'" icon="user" label="My Profile" />
+        <SidebarLink to="/app/profile/locations" :active="route.name === 'profile-locations'" icon="map-pin" label="Delivery Locations" />
+        <SidebarLink to="/app/profile/notifications" :active="route.name === 'profile-notifications'" icon="bell" label="Notifications" />
+        <SidebarLink to="/app/support" :active="route.name === 'support'" icon="help" label="Support" />
       </nav>
 
       <!-- Credit Widget + Logout -->
@@ -89,10 +89,10 @@
           <div v-if="(auth.customer?.outstanding_balance ?? 0) > 0" class="flex items-center gap-2 bg-red-50 border border-red-100 rounded-xl px-3 py-1.5">
             <span class="w-2 h-2 bg-red-500 rounded-full"></span>
             <span class="text-xs font-medium text-red-600">Outstanding: ₹{{ shortAmount(auth.customer?.outstanding_balance) }}</span>
-            <router-link to="/payments/pay" class="text-xs font-semibold text-red-700 underline">Pay</router-link>
+            <router-link to="/app/payments/pay" class="text-xs font-semibold text-red-700 underline">Pay</router-link>
           </div>
           <!-- New Order CTA -->
-          <router-link to="/orders/new" class="btn-primary text-sm px-4 py-2">
+          <router-link to="/app/orders/new" class="btn-primary text-sm px-4 py-2">
             + New Order
           </router-link>
         </div>
@@ -127,19 +127,19 @@
     ═══════════════════════════════════════ -->
     <nav class="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-100 z-30 safe-area-pb">
       <div class="flex">
-        <MobileNavItem to="/" icon="home" label="Home" :active="route.name === 'dashboard'" />
-        <MobileNavItem to="/orders" icon="package" label="Orders" :active="String(route.name).startsWith('orders')" />
+        <MobileNavItem to="/app" icon="home" label="Home" :active="route.name === 'dashboard'" />
+        <MobileNavItem to="/app/orders" icon="package" label="Orders" :active="String(route.name).startsWith('orders')" />
         <!-- FAB New Order -->
         <div class="flex flex-col items-center justify-center flex-1 py-2">
-          <router-link to="/orders/new" class="w-12 h-12 bg-primary-600 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-200 -mt-5">
+          <router-link to="/app/orders/new" class="w-12 h-12 bg-primary-600 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-200 -mt-5">
             <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
           </router-link>
           <span class="text-xs font-medium text-primary-600 mt-1">Order</span>
         </div>
-        <MobileNavItem to="/payments" icon="credit-card" label="Pay" :active="String(route.name).startsWith('payments')" />
-        <MobileNavItem to="/profile" icon="user" label="Profile" :active="String(route.name).startsWith('profile') || route.name === 'support'" />
+        <MobileNavItem to="/app/payments" icon="credit-card" label="Pay" :active="String(route.name).startsWith('payments')" />
+        <MobileNavItem to="/app/profile" icon="user" label="Profile" :active="String(route.name).startsWith('profile') || route.name === 'support'" />
       </div>
     </nav>
 
@@ -200,7 +200,7 @@ function shortAmount(val?: number) {
 
 async function handleLogout() {
   await auth.logout()
-  router.push('/login')
+  router.push('/')
 }
 
 async function installPwa() {

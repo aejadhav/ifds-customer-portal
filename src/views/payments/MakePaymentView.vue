@@ -89,7 +89,7 @@
       </div>
       <h2 class="text-lg font-bold text-gray-900">Payment Submitted!</h2>
       <p class="text-sm text-gray-500">Your payment is being processed. Receipt will be emailed shortly.</p>
-      <router-link to="/payments" class="btn-primary inline-block text-sm mt-2">Done</router-link>
+      <router-link to="/app/payments" class="btn-primary inline-block text-sm mt-2">Done</router-link>
     </div>
   </div>
 </template>
