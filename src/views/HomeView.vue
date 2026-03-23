@@ -272,9 +272,134 @@
     </section>
 
     <!-- ═══════════════════════════════════════
+         CONTACT US
+    ═══════════════════════════════════════ -->
+    <section id="contact" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-14">
+          <p class="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-3">Get In Touch</p>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900" style="font-family: var(--font-heading)">Contact Us</h2>
+          <p class="text-gray-500 mt-4 max-w-xl mx-auto">Have a question or want to know more about our bulk fuel delivery services? Our team will get back to you within 24 hours.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          <!-- Left: Info -->
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Phone</p>
+                <p class="text-gray-500 text-sm mt-0.5">+91 20 1234 5678</p>
+                <p class="text-xs text-gray-400 mt-0.5">Mon–Sat, 9:00 AM – 6:00 PM</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Email</p>
+                <p class="text-gray-500 text-sm mt-0.5">support@fuelflowpro.in</p>
+                <p class="text-xs text-gray-400 mt-0.5">We reply within 24 hours</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Office</p>
+                <p class="text-gray-500 text-sm mt-0.5">IFDS Pvt. Ltd., Pune, Maharashtra</p>
+                <p class="text-xs text-gray-400 mt-0.5">Serving all of Maharashtra</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.533 5.837L.057 23.215a.75.75 0 00.928.928l5.378-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.524-5.188-1.437l-.372-.222-3.853 1.058 1.058-3.853-.222-.372A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">WhatsApp</p>
+                <p class="text-gray-500 text-sm mt-0.5">+91 98765 00000</p>
+                <p class="text-xs text-gray-400 mt-0.5">Quick responses on WhatsApp</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Form -->
+          <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6 sm:p-8">
+            <h3 class="font-bold text-gray-900 text-lg mb-6">Send us a message</h3>
+            <form @submit.prevent="submitContact" class="space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1.5">Full Name *</label>
+                  <input v-model="contactForm.name" type="text" class="block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition bg-white" placeholder="Rajesh Patil" required />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1.5">Company Name</label>
+                  <input v-model="contactForm.company" type="text" class="block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition bg-white" placeholder="Patil Logistics Pvt. Ltd." />
+                </div>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1.5">Mobile Number *</label>
+                  <input v-model="contactForm.mobile" type="tel" class="block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition bg-white" placeholder="9876543210" required />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
+                  <input v-model="contactForm.email" type="email" class="block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition bg-white" placeholder="rajesh@company.com" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Inquiry Type</label>
+                <select v-model="contactForm.type" class="block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition bg-white">
+                  <option value="pricing">Pricing & Credit Limits</option>
+                  <option value="onboarding">New Customer Onboarding</option>
+                  <option value="bulk">Bulk / Enterprise Orders</option>
+                  <option value="support">Technical Support</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Message *</label>
+                <textarea v-model="contactForm.message" rows="4" class="block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition bg-white" placeholder="Tell us about your fuel requirements, monthly volume, locations, etc." required></textarea>
+              </div>
+
+              <div v-if="contactSuccess" class="flex items-center gap-3 bg-green-50 border border-green-100 rounded-xl px-4 py-3">
+                <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="text-sm text-green-700 font-medium">Message sent! We'll get back to you within 24 hours.</p>
+              </div>
+
+              <button type="submit" :disabled="contactSubmitting" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 active:bg-primary-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg v-if="contactSubmitting" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                {{ contactSubmitting ? 'Sending...' : 'Send Message' }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
          FOOTER
     ═══════════════════════════════════════ -->
-    <footer id="contact" class="bg-gray-900 text-gray-400 py-14">
+    <footer class="bg-gray-900 text-gray-400 py-14">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <!-- Brand -->
@@ -335,6 +460,22 @@
 </template>
 
 <script setup lang="ts">
+import { ref, reactive } from 'vue'
+
+const contactSubmitting = ref(false)
+const contactSuccess = ref(false)
+const contactForm = reactive({ name: '', company: '', mobile: '', email: '', type: 'pricing', message: '' })
+
+async function submitContact() {
+  contactSubmitting.value = true
+  // Simulate API call — wire to backend endpoint when available
+  await new Promise(r => setTimeout(r, 1000))
+  contactSuccess.value = true
+  contactSubmitting.value = false
+  Object.assign(contactForm, { name: '', company: '', mobile: '', email: '', type: 'pricing', message: '' })
+  setTimeout(() => { contactSuccess.value = false }, 5000)
+}
+
 const stats = [
   { value: '500+', label: 'Business Customers' },
   { value: '2Cr+', label: 'Litres Delivered' },
