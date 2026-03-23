@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import api from '@/services/api'
 
 export interface CustomerProfile {
-  id: number
+  id: string          // UUID from fuelflow_customer DB
   name: string
   email: string
   mobile: string
@@ -13,6 +13,8 @@ export interface CustomerProfile {
   credit_used: number
   outstanding_balance: number
   status: string
+  ifds_synced: boolean
+  ifds_customer_id: number | null
 }
 
 export const useAuthStore = defineStore('auth', () => {
