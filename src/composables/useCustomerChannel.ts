@@ -24,6 +24,15 @@ export interface DeliveryStatusEvent {
   dispatched_at: string | null
 }
 
+export interface NotificationPushedEvent {
+  notification_id: string
+  type: string
+  title: string
+  body: string | null
+  data: Record<string, unknown>
+  created_at: string
+}
+
 export function useCustomerChannel() {
   const authStore = useAuthStore()
   const lastOrderEvent = ref<OrderStatusEvent | null>(null)
@@ -39,6 +48,7 @@ export function useCustomerChannel() {
   function subscribe(
     onOrderUpdate?: (e: OrderStatusEvent) => void,
     onDeliveryUpdate?: (e: DeliveryStatusEvent) => void,
+    onNotification?: (e: NotificationPushedEvent) => void,
   ) {
     if (!authStore.customer?.ifds_synced) return
 
@@ -53,6 +63,9 @@ export function useCustomerChannel() {
       .listen('.delivery.status.updated', (e: DeliveryStatusEvent) => {
         lastDeliveryEvent.value = e
         onDeliveryUpdate?.(e)
+      })
+      .listen('.notification.pushed', (e: NotificationPushedEvent) => {
+        onNotification?.(e)
       })
       .subscribed(() => {
         connected.value = true

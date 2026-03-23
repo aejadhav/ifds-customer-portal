@@ -84,13 +84,15 @@
           {{ pageTitle }}
         </h1>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
           <!-- Outstanding badge -->
           <div v-if="(auth.customer?.outstanding_balance ?? 0) > 0" class="flex items-center gap-2 bg-red-50 border border-red-100 rounded-xl px-3 py-1.5">
             <span class="w-2 h-2 bg-red-500 rounded-full"></span>
             <span class="text-xs font-medium text-red-600">Outstanding: ₹{{ shortAmount(auth.customer?.outstanding_balance) }}</span>
             <router-link to="/app/payments/pay" class="text-xs font-semibold text-red-700 underline">Pay</router-link>
           </div>
+          <!-- Notification Bell -->
+          <NotificationBell />
           <!-- New Order CTA -->
           <router-link to="/app/orders/new" class="btn-primary text-sm px-4 py-2">
             + New Order
@@ -109,9 +111,12 @@
             </div>
             <span class="font-bold text-gray-900 text-sm" style="font-family: var(--font-heading)">FuelFlow Pro</span>
           </div>
-          <div v-if="auth.customer" class="text-right">
-            <p class="text-xs text-gray-400">Available Credit</p>
-            <p class="text-sm font-bold text-green-600">₹{{ shortAmount(auth.availableCredit) }}</p>
+          <div class="flex items-center gap-2">
+            <NotificationBell v-if="auth.customer" />
+            <div v-if="auth.customer" class="text-right">
+              <p class="text-xs text-gray-400">Available Credit</p>
+              <p class="text-sm font-bold text-green-600">₹{{ shortAmount(auth.availableCredit) }}</p>
+            </div>
           </div>
         </div>
       </header>
@@ -155,6 +160,7 @@ import { useAuthStore } from '@/stores/auth'
 import SidebarLink from '@/components/SidebarLink.vue'
 import MobileNavItem from '@/components/MobileNavItem.vue'
 import PwaInstallBanner from '@/components/PwaInstallBanner.vue'
+import NotificationBell from '@/components/NotificationBell.vue'
 
 const route = useRoute()
 const router = useRouter()
