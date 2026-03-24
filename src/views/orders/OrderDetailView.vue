@@ -87,27 +87,27 @@
         <div class="space-y-2 text-sm">
           <div class="flex justify-between">
             <span class="text-gray-500">Product</span>
-            <span class="font-medium">{{ order.product }}</span>
+            <span class="font-medium">{{ order.product_name }}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-500">Quantity</span>
-            <span class="font-medium">{{ order.quantity.toLocaleString('en-IN') }} L</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-500">Rate</span>
-            <span class="font-medium">₹{{ order.rate_per_liter }}/L</span>
+            <span class="font-medium">{{ Number(order.quantity_ordered).toLocaleString('en-IN') }} L</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-500">Total</span>
-            <span class="font-bold text-gray-900">₹{{ order.total_amount.toLocaleString('en-IN') }}</span>
+            <span class="font-bold text-gray-900">₹{{ Number(order.total_amount).toLocaleString('en-IN') }}</span>
           </div>
           <div class="flex justify-between">
-            <span class="text-gray-500">Payment</span>
-            <span class="font-medium capitalize">{{ order.payment_mode }}</span>
+            <span class="text-gray-500">Payment Terms</span>
+            <span class="font-medium capitalize">{{ order.payment_terms }}</span>
           </div>
           <div class="flex justify-between">
-            <span class="text-gray-500">Location</span>
-            <span class="font-medium text-right max-w-[60%]">{{ order.delivery_location }}</span>
+            <span class="text-gray-500">Channel</span>
+            <span class="font-medium">{{ order.order_channel }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Delivery Date</span>
+            <span class="font-medium">{{ order.requested_delivery_date ? new Date(order.requested_delivery_date).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—' }}</span>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useOrdersStore } from '@/stores/orders'
 import { useCustomerChannel, type DeliveryStatusEvent, type OrderStatusEvent } from '@/composables/useCustomerChannel'
@@ -160,30 +160,27 @@ function formatStatus(s: string) {
 
 function handleOrderUpdate(e: OrderStatusEvent) {
   // Only react to events for this specific order
-  if (String(e.order_id) !== String(route.params.id)) return
+  if (String(e.order_id) !== String(route.params.orderNumber)) return
   currentStatus.value = e.status
   liveUpdate.value = `Order is now ${formatStatus(e.status)}`
   setTimeout(() => { liveUpdate.value = null }, 8000)
 }
 
 function handleDeliveryUpdate(e: DeliveryStatusEvent) {
-  if (String(e.order_id) !== String(route.params.id)) return
+  if (String(e.order_id) !== String(route.params.orderNumber)) return
   deliveryInfo.value = e
   currentStatus.value = e.delivery_status === 'completed' ? 'delivered' : 'in_transit'
   liveUpdate.value = `Driver ${e.driver_name || ''} is on the way`
   setTimeout(() => { liveUpdate.value = null }, 10000)
 }
 
+watch(order, (o) => {
+  if (o && !currentStatus.value) currentStatus.value = o.status
+}, { immediate: true })
+
 onMounted(() => {
-  ordersStore.fetchOrder(Number(route.params.id))
+  ordersStore.fetchOrder(route.params.orderNumber as string)
   subscribe(handleOrderUpdate, handleDeliveryUpdate)
-  // Initialise currentStatus from store once loaded
-  const unwatch = setInterval(() => {
-    if (order.value && !currentStatus.value) {
-      currentStatus.value = order.value.status
-      clearInterval(unwatch)
-    }
-  }, 100)
 })
 </script>
 

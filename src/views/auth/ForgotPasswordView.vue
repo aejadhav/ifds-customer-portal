@@ -53,10 +53,10 @@ async function handleReset() {
   error.value = ''
   try {
     if (!otpSent.value) {
-      await api.post('/auth/customer/forgot-password', { mobile: mobile.value })
+      await api.post('/auth/forgot-password', { mobile: mobile.value })
       otpSent.value = true
     } else {
-      await api.post('/auth/customer/reset-password', { mobile: mobile.value, otp: otp.value, password: password.value })
+      await api.post('/auth/reset-password', { mobile: mobile.value, otp: otp.value, password: password.value })
       done.value = true
     }
   } catch (e: any) {

@@ -30,7 +30,7 @@ export const usePaymentsStore = defineStore('payments', () => {
   async function fetchOutstandingInvoices() {
     loading.value = true
     try {
-      const { data } = await api.get('/customer/invoices', { params: { status: 'unpaid' } })
+      const { data } = await api.get('/invoices', { params: { status: 'unpaid' } })
       invoices.value = data.data
     } finally {
       loading.value = false
@@ -40,7 +40,7 @@ export const usePaymentsStore = defineStore('payments', () => {
   async function fetchPaymentHistory() {
     loading.value = true
     try {
-      const { data } = await api.get('/customer/payments')
+      const { data } = await api.get('/payments')
       payments.value = data.data
     } finally {
       loading.value = false
@@ -48,7 +48,7 @@ export const usePaymentsStore = defineStore('payments', () => {
   }
 
   async function initiatePayment(payload: { invoice_ids: number[]; payment_mode: string; transaction_id?: string }) {
-    const { data } = await api.post('/customer/payments', payload)
+    const { data } = await api.post('/payments', payload)
     return data.data
   }
 

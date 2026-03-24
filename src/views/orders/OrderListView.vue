@@ -2,7 +2,7 @@
   <div class="page">
     <div class="flex items-center justify-between">
       <h1 class="page-title">Orders</h1>
-      <router-link to="/orders/new" class="btn-primary text-sm">+ New Order</router-link>
+      <router-link to="/app/orders/new" class="btn-primary text-sm">+ New Order</router-link>
     </div>
 
     <!-- Filters -->
@@ -24,7 +24,7 @@
         <span class="text-2xl">📦</span>
       </div>
       <p class="text-gray-500 font-medium">No orders found</p>
-      <router-link to="/orders/new" class="btn-primary mt-4 text-sm inline-flex">Place Order</router-link>
+      <router-link to="/app/orders/new" class="btn-primary mt-4 text-sm inline-flex">Place Order</router-link>
     </div>
 
     <!-- Orders grid (2-col on large screens) -->
@@ -32,21 +32,21 @@
       <router-link
         v-for="order in ordersStore.orders"
         :key="order.id"
-        :to="`/orders/${order.id}`"
+        :to="`/app/orders/${order.order_number}`"
         class="card-hover block"
       >
         <div class="flex items-start justify-between mb-3">
           <div>
             <p class="font-semibold text-gray-900">{{ order.order_number }}</p>
-            <p class="text-sm text-gray-500 mt-0.5">{{ order.product }} · {{ order.quantity.toLocaleString('en-IN') }} L</p>
+            <p class="text-sm text-gray-500 mt-0.5">{{ order.product_name }} · {{ Number(order.quantity_ordered).toLocaleString('en-IN') }} L</p>
           </div>
           <span class="badge" :class="statusBadge(order.status)">{{ formatStatus(order.status) }}</span>
         </div>
         <div class="flex items-center justify-between text-sm pt-3 border-t border-gray-100">
-          <span class="text-gray-400">📍 {{ order.delivery_location }}</span>
-          <span class="font-bold text-gray-900">₹{{ order.total_amount.toLocaleString('en-IN') }}</span>
+          <span class="text-gray-400">📍 {{ order.order_channel }}</span>
+          <span class="font-bold text-gray-900">₹{{ Number(order.total_amount).toLocaleString('en-IN') }}</span>
         </div>
-        <p class="text-xs text-gray-400 mt-2">{{ formatDate(order.scheduled_date) }}</p>
+        <p class="text-xs text-gray-400 mt-2">{{ formatDate(order.requested_delivery_date) }}</p>
       </router-link>
     </div>
 

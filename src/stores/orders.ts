@@ -26,7 +26,7 @@ export const useOrdersStore = defineStore('orders', () => {
   async function fetchOrders(params: Record<string, unknown> = {}) {
     loading.value = true
     try {
-      const { data } = await api.get('/customer/orders', { params })
+      const { data } = await api.get('/orders', { params })
       orders.value = data.data
       meta.value = data.meta
     } finally {
@@ -35,16 +35,16 @@ export const useOrdersStore = defineStore('orders', () => {
   }
 
   async function fetchActiveOrders() {
-    const { data } = await api.get('/customer/orders', {
+    const { data } = await api.get('/orders', {
       params: { status: 'active' },
     })
     activeOrders.value = data.data
   }
 
-  async function fetchOrder(id: number) {
+  async function fetchOrder(orderNumber: string) {
     loading.value = true
     try {
-      const { data } = await api.get(`/customer/orders/${id}`)
+      const { data } = await api.get(`/orders/${orderNumber}`)
       currentOrder.value = data.data
     } finally {
       loading.value = false
@@ -53,14 +53,14 @@ export const useOrdersStore = defineStore('orders', () => {
 
   async function placeOrder(payload: {
     product: string
-    delivery_location_id: number
+    delivery_location_id: string
     quantity: number
     preferred_date: string
     preferred_time: string
     payment_mode: string
     special_instructions?: string
   }) {
-    const { data } = await api.post('/customer/orders', payload)
+    const { data } = await api.post('/orders', payload)
     return data.data
   }
 

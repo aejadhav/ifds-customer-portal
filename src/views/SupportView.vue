@@ -95,7 +95,7 @@ const faqs = reactive([
 async function submitTicket() {
   submitting.value = true
   try {
-    await api.post('/customer/support-tickets', ticket)
+    await api.post('/support/tickets', ticket)
     ticketSuccess.value = true
     Object.assign(ticket, { category: '', subject: '', description: '', priority: 'medium' })
   } catch {

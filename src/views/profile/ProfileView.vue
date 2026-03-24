@@ -70,9 +70,9 @@ const initials = computed(() =>
 )
 
 const menuItems = [
-  { icon: '📍', label: 'Delivery Locations', desc: 'Manage your delivery sites', to: '/profile/locations', bg: 'bg-blue-50' },
-  { icon: '🔔', label: 'Notification Preferences', desc: 'Control how we reach you', to: '/profile/notifications', bg: 'bg-amber-50' },
-  { icon: '🛟', label: 'Support & Help', desc: 'Get help or raise a ticket', to: '/support', bg: 'bg-green-50' },
+  { icon: '📍', label: 'Delivery Locations', desc: 'Manage your delivery sites', to: '/app/profile/locations', bg: 'bg-blue-50' },
+  { icon: '🔔', label: 'Notification Preferences', desc: 'Control how we reach you', to: '/app/profile/notifications', bg: 'bg-amber-50' },
+  { icon: '🛟', label: 'Support & Help', desc: 'Get help or raise a ticket', to: '/app/support', bg: 'bg-green-50' },
 ]
 
 async function handleLogout() {

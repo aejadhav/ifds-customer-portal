@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function loginWithOtp(mobile: string, otp: string) {
     loading.value = true
     try {
-      const { data } = await api.post('/auth/customer/verify-otp', { mobile, otp })
+      const { data } = await api.post('/auth/verify-otp', { mobile, otp })
       token.value = data.access_token
       customer.value = data.user
       localStorage.setItem('customer_token', data.access_token)

@@ -123,7 +123,7 @@ async function submitRegistration() {
   loading.value = true
   error.value = ''
   try {
-    const { data } = await api.post('/auth/customer/register', form)
+    const { data } = await api.post('/auth/register', form)
     refNumber.value = data.reference_number
     submitted.value = true
   } catch (e: any) {

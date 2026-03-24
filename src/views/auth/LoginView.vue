@@ -175,7 +175,7 @@ async function sendOtp() {
   loading.value = true
   error.value = ''
   try {
-    await api.post('/auth/customer/send-otp', { mobile: form.value.mobile })
+    await api.post('/auth/send-otp', { mobile: form.value.mobile })
     otpSent.value = true
   } catch (e: any) {
     error.value = e.response?.data?.message || 'Failed to send OTP'

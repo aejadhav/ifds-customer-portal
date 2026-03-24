@@ -27,7 +27,7 @@
       <div class="card space-y-4">
         <div>
           <label class="label">Delivery Location *</label>
-          <select v-model="form.delivery_location_id" class="input" required>
+          <select v-model="form.delivery_location_id" class="input">
             <option value="">Select location</option>
             <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }} — {{ loc.address }}</option>
           </select>
@@ -35,8 +35,8 @@
 
         <div>
           <label class="label">Quantity (Liters) *</label>
-          <input v-model.number="form.quantity" type="number" class="input" placeholder="10000" min="5000" step="500" required />
-          <p class="text-xs text-gray-400 mt-1">Min: 5,000 L · Max: 50,000 L</p>
+          <input v-model.number="form.quantity" type="number" class="input" placeholder="10000" min="1000" step="500" />
+          <p class="text-xs text-gray-400 mt-1">Max: 999,999 L</p>
         </div>
       </div>
 
@@ -46,11 +46,11 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="label">Date *</label>
-            <input v-model="form.preferred_date" type="date" class="input" :min="minDate" required />
+            <input v-model="form.preferred_date" type="date" class="input" :min="minDate" />
           </div>
           <div>
             <label class="label">Time *</label>
-            <select v-model="form.preferred_time" class="input" required>
+            <select v-model="form.preferred_time" class="input">
               <option value="08:00">8:00 AM</option>
               <option value="10:00">10:00 AM</option>
               <option value="12:00">12:00 PM</option>
@@ -99,7 +99,7 @@
 
       <p v-if="error" class="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{{ error }}</p>
 
-      <button type="submit" :disabled="loading" class="btn-primary w-full py-3 text-base">
+      <button type="button" @click="submitOrder" :disabled="loading" class="btn-primary w-full py-3 text-base">
         {{ loading ? 'Placing Order...' : 'Place Order' }}
       </button>
     </form>
@@ -115,7 +115,7 @@
       <p class="text-sm text-gray-500">{{ placedOrder?.order_number }}</p>
       <p class="text-xs text-gray-400">You'll receive notifications as your order progresses.</p>
       <div class="flex gap-3 justify-center mt-4">
-        <router-link :to="`/orders/${placedOrder?.id}`" class="btn-primary text-sm">Track Order</router-link>
+        <router-link :to="`/app/orders/${placedOrder?.order_number}`" class="btn-primary text-sm">Track Order</router-link>
         <router-link to="/app" class="btn-secondary text-sm">Dashboard</router-link>
       </div>
     </div>
@@ -151,12 +151,19 @@ const gst = computed(() => Math.round(subtotal.value * 0.05))
 const total = computed(() => subtotal.value + gst.value)
 
 async function submitOrder() {
-  loading.value = true
   error.value = ''
+  console.log('submitOrder called', JSON.stringify(form.value))
+
+  // Explicit validation so errors are always visible
+  if (!form.value.delivery_location_id) { error.value = 'Please select a delivery location.'; return }
+  if (!form.value.quantity || form.value.quantity < 1) { error.value = 'Please enter a quantity.'; return }
+  if (!form.value.preferred_date) { error.value = 'Please select a preferred delivery date.'; return }
+
+  loading.value = true
   try {
     placedOrder.value = await ordersStore.placeOrder({
       product: form.value.product,
-      delivery_location_id: Number(form.value.delivery_location_id),
+      delivery_location_id: form.value.delivery_location_id,
       quantity: form.value.quantity,
       preferred_date: form.value.preferred_date,
       preferred_time: form.value.preferred_time,
@@ -172,7 +179,7 @@ async function submitOrder() {
 }
 
 onMounted(async () => {
-  const { data } = await api.get('/customers/me/locations')
+  const { data } = await api.get('/profile/addresses')
   locations.value = data.data || []
 })
 </script>

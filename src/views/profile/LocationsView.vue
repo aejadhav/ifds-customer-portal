@@ -78,7 +78,7 @@ const newLoc = ref({ name: '', address: '', contact_person: '', contact_mobile: 
 async function loadLocations() {
   loading.value = true
   try {
-    const { data } = await api.get('/customers/me/locations')
+    const { data } = await api.get('/profile/addresses')
     locations.value = data.data || []
   } finally {
     loading.value = false
@@ -89,7 +89,7 @@ async function addLocation() {
   saving.value = true
   formError.value = ''
   try {
-    const { data } = await api.post('/customers/me/locations', newLoc.value)
+    const { data } = await api.post('/profile/addresses', newLoc.value)
     locations.value.push(data.data)
     showAddForm.value = false
     newLoc.value = { name: '', address: '', contact_person: '', contact_mobile: '', landmark: '' }
