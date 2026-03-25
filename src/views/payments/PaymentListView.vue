@@ -1,8 +1,11 @@
 <template>
   <div class="page">
     <div class="flex items-center justify-between">
-      <h1 class="page-title">Payments</h1>
-      <router-link to="/payments/pay" class="btn-primary text-sm">Pay Now</router-link>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Payments</h1>
+        <p class="text-sm text-gray-500 mt-0.5">Manage invoices and payment history</p>
+      </div>
+      <router-link to="/payments/pay" class="btn-primary text-sm px-5 py-2.5">Pay Now</router-link>
     </div>
 
     <!-- Outstanding Banner -->

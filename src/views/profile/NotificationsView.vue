@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="flex items-center gap-3">
-      <button @click="$router.back()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100">
+      <button @click="$router.back()" class="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -9,13 +9,15 @@
       <h1 class="text-xl font-bold text-gray-900">Notifications</h1>
     </div>
 
-    <div v-for="group in notificationGroups" :key="group.title" class="card space-y-3">
-      <h2 class="font-semibold text-sm text-gray-900">{{ group.title }}</h2>
-      <div v-for="item in group.items" :key="item.key" class="flex items-center justify-between">
-        <p class="text-sm text-gray-700">{{ item.label }}</p>
-        <button @click="item.enabled = !item.enabled" class="w-10 h-6 rounded-full transition-colors" :class="item.enabled ? 'bg-blue-600' : 'bg-gray-200'">
-          <div class="w-4 h-4 bg-white rounded-full shadow transition-transform mx-1" :class="item.enabled ? 'translate-x-4' : 'translate-x-0'"></div>
-        </button>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div v-for="group in notificationGroups" :key="group.title" class="card space-y-3">
+        <h2 class="font-semibold text-sm text-gray-900">{{ group.title }}</h2>
+        <div v-for="item in group.items" :key="item.key" class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">{{ item.label }}</p>
+          <button @click="item.enabled = !item.enabled" class="w-10 h-6 rounded-full transition-colors" :class="item.enabled ? 'bg-blue-600' : 'bg-gray-200'">
+            <div class="w-4 h-4 bg-white rounded-full shadow transition-transform mx-1" :class="item.enabled ? 'translate-x-4' : 'translate-x-0'"></div>
+          </button>
+        </div>
       </div>
     </div>
 

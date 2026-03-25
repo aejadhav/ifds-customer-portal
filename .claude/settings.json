@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Read(//home/aniket/business_venture/projects/**)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ],
+    "additionalDirectories": [
+      "/home/aniket/business_venture/projects/ifds-customer-api/app/Http/Controllers/Auth"
+    ]
+  }
+}
