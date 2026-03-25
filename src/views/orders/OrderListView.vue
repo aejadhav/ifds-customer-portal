@@ -46,7 +46,7 @@
           <span class="text-gray-400">📍 {{ order.order_channel }}</span>
           <span class="font-bold text-gray-900">₹{{ Number(order.total_amount).toLocaleString('en-IN') }}</span>
         </div>
-        <p class="text-xs text-gray-400 mt-2">{{ formatDate(order.requested_delivery_date) }}</p>
+        <p class="text-xs text-gray-400 mt-2">{{ order.requested_delivery_date ? formatDate(order.requested_delivery_date) : '—' }}</p>
       </router-link>
     </div>
 

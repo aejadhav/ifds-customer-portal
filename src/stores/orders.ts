@@ -6,13 +6,18 @@ export interface Order {
   id: number
   order_number: string
   product: string
+  product_name: string
   quantity: number
+  quantity_ordered: number
   status: string
   delivery_location: string
   scheduled_date: string
+  requested_delivery_date: string | null
   total_amount: number
   rate_per_liter: number
   payment_mode: string
+  payment_terms: string
+  order_channel: string
   created_at: string
 }
 
