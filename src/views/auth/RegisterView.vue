@@ -128,7 +128,7 @@
               {{ loading ? 'Verifying...' : 'Verify & Continue' }}
             </button>
             <button type="button" @click="resendOtp" :disabled="resendCooldown > 0" class="w-full text-sm text-gray-500 hover:text-primary-600 transition-colors">
-              {{ resendCooldown > 0 ? `Resend OTP in ${resendCooldown}s` : 'Resend OTP' }}
+              {{ resendCooldown > 0 ? `Resend OTP in ${Math.floor(resendCooldown / 60)}:${String(resendCooldown % 60).padStart(2, '0')}` : 'Resend OTP' }}
             </button>
           </form>
         </template>
@@ -183,7 +183,7 @@ const benefits = [
 ]
 
 function startCooldown() {
-  resendCooldown.value = 30
+  resendCooldown.value = 300
   cooldownTimer = setInterval(() => {
     resendCooldown.value--
     if (resendCooldown.value <= 0 && cooldownTimer) {
