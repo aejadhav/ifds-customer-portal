@@ -39,9 +39,9 @@ export function useCustomerChannel() {
   const lastDeliveryEvent = ref<DeliveryStatusEvent | null>(null)
   const connected = ref(false)
 
-  // Customer subscribes to their own private channel using the BFF UUID.
-  // The BFF auth endpoint rewrites it to the ifds_customer_id before forwarding to Reverb.
-  const channelName = `customer.${authStore.customer?.id}`
+  // Customer subscribes using their IFDS integer ID — this matches the channel
+  // the IFDS app broadcasts on (private-customer.{ifds_customer_id}).
+  const channelName = `customer.${authStore.customer?.ifds_customer_id}`
 
   let channel: ReturnType<ReturnType<typeof getEcho>['private']> | null = null
 

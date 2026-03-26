@@ -19,6 +19,7 @@ export function getEcho(): Echo<'pusher'> {
   echoInstance = new Echo({
     broadcaster: 'pusher',
     key: import.meta.env.VITE_REVERB_APP_KEY as string,
+    cluster: 'mt1',  // required by pusher-js; ignored when wsHost is provided
     wsHost: import.meta.env.VITE_REVERB_HOST as string || '127.0.0.1',
     wsPort: Number(import.meta.env.VITE_REVERB_PORT) || 8080,
     wssPort: Number(import.meta.env.VITE_REVERB_PORT) || 8080,
@@ -26,7 +27,7 @@ export function getEcho(): Echo<'pusher'> {
     disableStats: true,
     enabledTransports: ['ws', 'wss'],
     // Auth goes through BFF — BFF validates JWT, maps UUID → ifds_id, proxies to Reverb
-    authEndpoint: `${import.meta.env.VITE_API_URL || '/api'}/v1/broadcasting/auth`,
+    authEndpoint: `${import.meta.env.VITE_API_URL || '/api/v1'}/broadcasting/auth`,
     auth: {
       headers: {
         Authorization: token ? `Bearer ${token}` : '',

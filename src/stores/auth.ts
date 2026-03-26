@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import api from '@/services/api'
+import { refreshEchoAuth, disconnectEcho } from '@/services/echo'
 
 export interface CustomerProfile {
   id: string          // UUID from fuelflow_customer DB
@@ -19,7 +20,8 @@ export interface CustomerProfile {
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(localStorage.getItem('customer_token'))
-  const customer = ref<CustomerProfile | null>(null)
+  const _savedUser = (() => { try { return JSON.parse(localStorage.getItem('customer_user') || 'null') } catch { return null } })()
+  const customer = ref<CustomerProfile | null>(_savedUser)
   const loading = ref(false)
 
   const isAuthenticated = computed(() => !!token.value)
@@ -32,8 +34,11 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const { data } = await api.post('/auth/login', credentials)
       token.value = data.access_token
-      customer.value = data.user
+      customer.value = data.customer ?? data.user
       localStorage.setItem('customer_token', data.access_token)
+      localStorage.setItem('customer_user', JSON.stringify(customer.value))
+      disconnectEcho()
+      refreshEchoAuth(data.access_token)
     } finally {
       loading.value = false
     }
@@ -44,17 +49,20 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const { data } = await api.post('/auth/verify-otp', { mobile, otp })
       token.value = data.access_token
-      customer.value = data.user
+      customer.value = data.customer ?? data.user
       localStorage.setItem('customer_token', data.access_token)
+      localStorage.setItem('customer_user', JSON.stringify(customer.value))
+      disconnectEcho()
+      refreshEchoAuth(data.access_token)
     } finally {
       loading.value = false
     }
   }
 
   async function fetchProfile() {
-    // Uses /auth/me for now; swap to /customers/me once customer profile is linked
     const { data } = await api.get('/auth/me')
-    customer.value = data.user
+    customer.value = data.data ?? data.customer ?? data.user
+    localStorage.setItem('customer_user', JSON.stringify(customer.value))
   }
 
   async function logout() {
@@ -66,6 +74,8 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = null
       customer.value = null
       localStorage.removeItem('customer_token')
+      localStorage.removeItem('customer_user')
+      disconnectEcho()
     }
   }
 
