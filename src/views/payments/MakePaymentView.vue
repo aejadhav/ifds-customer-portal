@@ -115,8 +115,8 @@ const success = ref(false)
 
 const methods = [
   { label: 'UPI', value: 'upi', icon: '📱' },
-  { label: 'Debit/Credit Card', value: 'card', icon: '💳' },
-  { label: 'Net Banking', value: 'netbanking', icon: '🏦' },
+  { label: 'NEFT / RTGS', value: 'neft', icon: '🔄' },
+  { label: 'Cheque', value: 'cheque', icon: '🧾' },
   { label: 'NEFT / RTGS', value: 'neft', icon: '🔄' },
 ]
 
@@ -131,13 +131,20 @@ function toggleInvoice(id: number) {
 }
 
 async function submitPayment() {
+  if (selected.value.length === 0) {
+    error.value = 'Please select at least one invoice.'
+    return
+  }
   loading.value = true
   error.value = ''
   try {
     await paymentsStore.initiatePayment({
-      invoice_ids: selected.value,
-      payment_mode: paymentMode.value,
+      amount: selectedTotal.value,
+      payment_method: paymentMode.value,
+      payment_date: new Date().toISOString().split('T')[0],
       transaction_id: transactionId.value || undefined,
+      upi_id: paymentMode.value === 'upi' ? transactionId.value || undefined : undefined,
+      invoice_ids: selected.value,
     })
     success.value = true
   } catch (e: any) {
