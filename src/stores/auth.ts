@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(credentials: { mobile?: string; email?: string; password: string }) {
     loading.value = true
     try {
-      const { data } = await api.post('/auth/login', credentials)
+      const { data } = await api.post('/auth/login-password', credentials)
       token.value = data.access_token
       customer.value = data.customer ?? data.user
       localStorage.setItem('customer_token', data.access_token)
