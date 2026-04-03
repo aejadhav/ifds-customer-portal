@@ -164,12 +164,13 @@ async function saveProfile() {
       company_name: form.company_name || undefined,
       gstin:        form.gstin || undefined,
     })
-    // Update local auth store
+    // Update local auth store and persist to localStorage
     if (auth.customer) {
       auth.customer.name         = data.data.name
       auth.customer.email        = data.data.email
       auth.customer.company_name = data.data.company_name
       auth.customer.gst_number   = data.data.gstin
+      localStorage.setItem('customer_user', JSON.stringify(auth.customer))
     }
     saveSuccess.value = true
     setTimeout(() => { saveSuccess.value = false }, 4000)
