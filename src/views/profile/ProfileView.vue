@@ -257,10 +257,22 @@ async function handleLogout() {
   router.push('/login')
 }
 
-onMounted(() => {
+onMounted(async () => {
+  // Pre-fill from cache immediately so fields aren't blank during load
   form.name         = auth.customer?.name || ''
   form.email        = auth.customer?.email || ''
   form.company_name = auth.customer?.company_name || ''
   form.gstin        = auth.customer?.gst_number || ''
+
+  // Then fetch fresh data from the server and re-fill
+  try {
+    await auth.fetchProfile()
+    form.name         = auth.customer?.name || ''
+    form.email        = auth.customer?.email || ''
+    form.company_name = auth.customer?.company_name || ''
+    form.gstin        = auth.customer?.gst_number || ''
+  } catch {
+    // silently ignore — cached values remain
+  }
 })
 </script>

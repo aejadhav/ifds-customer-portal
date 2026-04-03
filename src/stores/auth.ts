@@ -49,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const { data } = await api.post('/auth/verify-otp', { mobile, otp })
       token.value = data.access_token
-      customer.value = data.customer ?? data.user
+      customer.value = normalise(data.customer ?? data.user)
       localStorage.setItem('customer_token', data.access_token)
       localStorage.setItem('customer_user', JSON.stringify(customer.value))
       disconnectEcho()
@@ -60,9 +60,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchProfile() {
-    const { data } = await api.get('/auth/me')
-    customer.value = data.data ?? data.customer ?? data.user
+    const { data } = await api.get('/profile')
+    customer.value = normalise(data.data ?? data.customer ?? data.user)
     localStorage.setItem('customer_user', JSON.stringify(customer.value))
+  }
+
+  // API returns `gstin`; store uses `gst_number` — normalise on the way in
+  function normalise(raw: any): CustomerProfile {
+    if (!raw) return raw
+    return { ...raw, gst_number: raw.gst_number ?? raw.gstin ?? '' }
   }
 
   async function logout() {
