@@ -121,7 +121,7 @@
 
         <!-- Navigation menu -->
         <div class="list-card">
-          <router-link v-for="item in menuItems" :key="item.to" :to="item.to" class="list-item">
+          <router-link v-for="item in menuItems" :key="item.to" :to="item.to" class="list-item flex items-center gap-3">
             <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-lg" :class="item.bg">
               {{ item.icon }}
             </div>
