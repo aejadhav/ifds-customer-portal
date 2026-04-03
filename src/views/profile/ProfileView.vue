@@ -93,6 +93,32 @@
           </div>
         </div>
 
+        <!-- Set / Change Password -->
+        <div class="card space-y-4">
+          <h2 class="section-heading">Password Login</h2>
+          <p class="text-sm text-gray-500">Set a password so you can log in without OTP.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="label">New Password</label>
+              <input v-model="pwForm.password" type="password" class="input" placeholder="Min. 8 characters" />
+            </div>
+            <div>
+              <label class="label">Confirm Password</label>
+              <input v-model="pwForm.password_confirmation" type="password" class="input" placeholder="Repeat password" />
+            </div>
+          </div>
+
+          <p v-if="pwError" class="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{{ pwError }}</p>
+          <p v-if="pwSuccess" class="text-sm text-green-700 bg-green-50 border border-green-100 rounded-xl px-4 py-3">✓ Password set successfully. You can now log in with your mobile + password.</p>
+
+          <div class="flex justify-end">
+            <button @click="setPassword" :disabled="pwSaving" class="btn-primary">
+              {{ pwSaving ? 'Saving...' : 'Set Password' }}
+            </button>
+          </div>
+        </div>
+
         <!-- Navigation menu -->
         <div class="list-card">
           <router-link v-for="item in menuItems" :key="item.to" :to="item.to" class="list-item">
@@ -134,6 +160,15 @@ const router = useRouter()
 const saving = ref(false)
 const saveError = ref('')
 const saveSuccess = ref(false)
+
+const pwSaving = ref(false)
+const pwError = ref('')
+const pwSuccess = ref(false)
+
+const pwForm = reactive({
+  password: '',
+  password_confirmation: '',
+})
 
 const form = reactive({
   name: '',
@@ -181,6 +216,39 @@ async function saveProfile() {
       : e.response?.data?.message || 'Failed to save profile.'
   } finally {
     saving.value = false
+  }
+}
+
+async function setPassword() {
+  pwError.value = ''
+  pwSuccess.value = false
+
+  if (pwForm.password.length < 8) {
+    pwError.value = 'Password must be at least 8 characters.'
+    return
+  }
+  if (pwForm.password !== pwForm.password_confirmation) {
+    pwError.value = 'Passwords do not match.'
+    return
+  }
+
+  pwSaving.value = true
+  try {
+    await api.post('/auth/password/set', {
+      password:              pwForm.password,
+      password_confirmation: pwForm.password_confirmation,
+    })
+    pwSuccess.value = true
+    pwForm.password = ''
+    pwForm.password_confirmation = ''
+    setTimeout(() => { pwSuccess.value = false }, 5000)
+  } catch (e: any) {
+    const errors = e.response?.data?.errors
+    pwError.value = errors
+      ? Object.values(errors).flat().join(' ')
+      : e.response?.data?.message || 'Failed to set password.'
+  } finally {
+    pwSaving.value = false
   }
 }
 
