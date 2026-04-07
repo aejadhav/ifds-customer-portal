@@ -8,7 +8,37 @@
         </svg>
       </button>
       <h1 class="text-xl font-bold text-gray-900">Order Details</h1>
+      <div class="ml-auto" v-if="order && ['pending', 'confirmed'].includes(order.status)">
+        <button @click="showCancelModal = true"
+                class="text-sm px-3 py-1.5 rounded-lg border border-red-300 text-red-600 hover:bg-red-50 transition-colors">
+          Cancel Order
+        </button>
+      </div>
     </div>
+
+    <!-- Cancel Order Modal -->
+    <Teleport to="body">
+      <div v-if="showCancelModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 space-y-4">
+          <h3 class="text-base font-semibold text-gray-900">Cancel Order</h3>
+          <p class="text-sm text-gray-500">Please tell us why you're cancelling this order.</p>
+          <textarea v-model="cancelReason" rows="3" maxlength="500"
+                    placeholder="Reason for cancellation…"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-300 resize-none"></textarea>
+          <p v-if="cancelError" class="text-xs text-red-600">{{ cancelError }}</p>
+          <div class="flex gap-3">
+            <button @click="showCancelModal = false; cancelError = ''"
+                    class="flex-1 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-50">
+              Keep Order
+            </button>
+            <button @click="confirmCancel" :disabled="cancelLoading"
+                    class="flex-1 py-2 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 disabled:opacity-60">
+              {{ cancelLoading ? 'Cancelling…' : 'Confirm Cancel' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
 
     <!-- Live update banner — always full width, above the grid -->
     <transition name="slide-down">
@@ -146,6 +176,32 @@ const liveUpdate = ref<string | null>(null)
 const currentStatus = ref<string>('')
 const deliveryInfo = ref<DeliveryStatusEvent | null>(null)
 
+// Cancel order state
+const showCancelModal = ref(false)
+const cancelReason = ref('')
+const cancelLoading = ref(false)
+const cancelError = ref('')
+
+async function confirmCancel() {
+  if (!cancelReason.value.trim()) {
+    cancelError.value = 'Please provide a reason for cancellation.'
+    return
+  }
+  cancelLoading.value = true
+  cancelError.value = ''
+  try {
+    await ordersStore.cancelOrder(route.params.orderNumber as string, cancelReason.value.trim())
+    showCancelModal.value = false
+    cancelReason.value = ''
+    currentStatus.value = 'cancelled'
+  } catch (err: unknown) {
+    const e = err as { response?: { data?: { message?: string } } }
+    cancelError.value = e?.response?.data?.message ?? 'Failed to cancel order. Please try again.'
+  } finally {
+    cancelLoading.value = false
+  }
+}
+
 const { subscribe, connected } = useCustomerChannel()
 
 const statusOrder = ['pending', 'confirmed', 'scheduled', 'dispatched', 'in_transit', 'delivered']
@@ -165,7 +221,8 @@ const timeline = computed(() => {
 
 function statusBadge(status: string) {
   const map: Record<string, string> = {
-    confirmed: 'badge-blue', dispatched: 'badge-yellow', in_transit: 'badge-yellow', delivered: 'badge-green',
+    confirmed: 'badge-blue', dispatched: 'badge-yellow', in_transit: 'badge-yellow',
+    delivered: 'badge-green', cancelled: 'badge-red',
   }
   return map[status] || 'badge-gray'
 }

@@ -117,7 +117,7 @@ const methods = [
   { label: 'UPI', value: 'upi', icon: '📱' },
   { label: 'NEFT / RTGS', value: 'neft', icon: '🔄' },
   { label: 'Cheque', value: 'cheque', icon: '🧾' },
-  { label: 'NEFT / RTGS', value: 'neft', icon: '🔄' },
+  { label: 'Cash', value: 'cash', icon: '💵' },
 ]
 
 const selectedTotal = computed(() =>

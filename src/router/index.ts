@@ -70,6 +70,11 @@ const router = createRouter({
           name: 'payments-pay',
           component: () => import('@/views/payments/MakePaymentView.vue'),
         },
+        {
+          path: 'invoices',
+          name: 'invoices',
+          component: () => import('@/views/payments/InvoiceListView.vue'),
+        },
         // Reports
         {
           path: 'reports',

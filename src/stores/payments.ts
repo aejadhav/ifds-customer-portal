@@ -24,14 +24,27 @@ export interface Payment {
 
 export const usePaymentsStore = defineStore('payments', () => {
   const invoices = ref<Invoice[]>([])
+  const allInvoices = ref<Invoice[]>([])
   const payments = ref<Payment[]>([])
   const loading = ref(false)
+  const allInvoicesMeta = ref({ current_page: 1, last_page: 1, total: 0 })
 
   async function fetchOutstandingInvoices() {
     loading.value = true
     try {
       const { data } = await api.get('/invoices', { params: { status: 'pending' } })
       invoices.value = data.data ?? []
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function fetchAllInvoices(params: Record<string, unknown> = {}) {
+    loading.value = true
+    try {
+      const { data } = await api.get('/invoices', { params })
+      allInvoices.value = data.data ?? []
+      allInvoicesMeta.value = data.meta ?? { current_page: 1, last_page: 1, total: 0 }
     } finally {
       loading.value = false
     }
@@ -59,5 +72,5 @@ export const usePaymentsStore = defineStore('payments', () => {
     return data
   }
 
-  return { invoices, payments, loading, fetchOutstandingInvoices, fetchPaymentHistory, initiatePayment }
+  return { invoices, allInvoices, allInvoicesMeta, payments, loading, fetchOutstandingInvoices, fetchAllInvoices, fetchPaymentHistory, initiatePayment }
 })

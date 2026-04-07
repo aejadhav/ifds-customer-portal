@@ -69,5 +69,13 @@ export const useOrdersStore = defineStore('orders', () => {
     return data.data
   }
 
-  return { orders, activeOrders, currentOrder, loading, meta, fetchOrders, fetchActiveOrders, fetchOrder, placeOrder }
+  async function cancelOrder(orderNumber: string, cancellationReason: string) {
+    const { data } = await api.post(`/orders/${orderNumber}/cancel`, { cancellation_reason: cancellationReason })
+    if (currentOrder.value?.order_number === orderNumber) {
+      currentOrder.value = { ...currentOrder.value, status: 'cancelled' }
+    }
+    return data
+  }
+
+  return { orders, activeOrders, currentOrder, loading, meta, fetchOrders, fetchActiveOrders, fetchOrder, placeOrder, cancelOrder }
 })

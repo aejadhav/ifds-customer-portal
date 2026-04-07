@@ -36,6 +36,7 @@
         <SidebarLink to="/app" :active="route.name === 'dashboard'" icon="home" label="Dashboard" />
         <SidebarLink to="/app/orders" :active="String(route.name).startsWith('orders')" icon="package" label="Orders" />
         <SidebarLink to="/app/payments" :active="String(route.name).startsWith('payments')" icon="credit-card" label="Payments" />
+        <SidebarLink to="/app/invoices" :active="route.name === 'invoices'" icon="file-text" label="Invoices" />
         <SidebarLink to="/app/reports" :active="route.name === 'reports'" icon="bar-chart" label="Reports" />
 
         <div class="pt-4 pb-1 px-3">
@@ -187,6 +188,7 @@ const pageTitle = computed(() => {
     'orders-detail': 'Order Details',
     payments: 'Payments',
     'payments-pay': 'Make Payment',
+    invoices: 'Invoices',
     reports: 'Reports',
     profile: 'My Profile',
     'profile-locations': 'Delivery Locations',
