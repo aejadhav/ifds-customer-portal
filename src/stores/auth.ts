@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = data.access_token
       customer.value = data.customer ?? data.user
       localStorage.setItem('customer_token', data.access_token)
-      localStorage.setItem('customer_user', JSON.stringify(customer.value))
+      localStorage.setItem('customer_user', JSON.stringify(sanitiseForStorage(customer.value!)))
       disconnectEcho()
       refreshEchoAuth(data.access_token)
     } finally {
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = data.access_token
       customer.value = normalise(data.customer ?? data.user)
       localStorage.setItem('customer_token', data.access_token)
-      localStorage.setItem('customer_user', JSON.stringify(customer.value))
+      localStorage.setItem('customer_user', JSON.stringify(sanitiseForStorage(customer.value!)))
       disconnectEcho()
       refreshEchoAuth(data.access_token)
     } finally {
@@ -62,7 +62,13 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchProfile() {
     const { data } = await api.get('/profile')
     customer.value = normalise(data.data ?? data.customer ?? data.user)
-    localStorage.setItem('customer_user', JSON.stringify(customer.value))
+    localStorage.setItem('customer_user', JSON.stringify(sanitiseForStorage(customer.value!)))
+  }
+
+  /** Strip fields that should not be persisted to localStorage */
+  function sanitiseForStorage(profile: CustomerProfile): Partial<CustomerProfile> {
+    const { credit_limit, credit_used, outstanding_balance, ...safe } = profile as any
+    return safe
   }
 
   // API returns `gstin`; store uses `gst_number` — normalise on the way in

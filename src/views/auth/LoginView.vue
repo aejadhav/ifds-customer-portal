@@ -196,7 +196,12 @@ async function handleLogin() {
     } else {
       await auth.loginWithOtp(form.value.mobile, form.value.otp)
     }
-    router.push((route.query.redirect as string) || '/app')
+    const redirectTo = route.query.redirect as string
+    // Only allow relative internal redirects (must start with / but not //)
+    const safeRedirect = (redirectTo && redirectTo.startsWith('/') && !redirectTo.startsWith('//'))
+      ? redirectTo
+      : '/app'
+    router.push(safeRedirect)
   } catch (e: any) {
     error.value = e.response?.data?.message || 'Invalid credentials. Please try again.'
   } finally {

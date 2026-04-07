@@ -42,8 +42,8 @@ export function getEcho(): Echo<'pusher'> {
 /** Update the Authorization header when the token changes (e.g. after login). */
 export function refreshEchoAuth(token: string): void {
   if (echoInstance) {
-    // @ts-ignore — access internal connector options
-    echoInstance.connector.pusher.config.auth.headers.Authorization = `Bearer ${token}`
+    // Access internal connector options via type cast
+    ;(echoInstance.connector as any).pusher.config.auth.headers.Authorization = `Bearer ${token}`
   }
 }
 
