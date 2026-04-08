@@ -21,7 +21,9 @@
       </div>
     </div>
 
-    <button class="btn-primary w-full">Save Preferences</button>
+    <div>
+      <button class="btn-primary">Save Preferences</button>
+    </div>
   </div>
 </template>
 

@@ -18,12 +18,9 @@
         <!-- Product -->
         <div class="card space-y-3">
           <h2 class="font-semibold text-gray-900 text-sm">Product</h2>
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-1 gap-2">
             <button type="button" @click="form.product = 'HSD'" class="py-3 rounded-xl border-2 text-sm font-medium transition-colors" :class="form.product === 'HSD' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600'">
               ⛽ High Speed Diesel
-            </button>
-            <button type="button" @click="form.product = 'Petrol'" class="py-3 rounded-xl border-2 text-sm font-medium transition-colors" :class="form.product === 'Petrol' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600'">
-              🛢 Petrol
             </button>
           </div>
         </div>
