@@ -130,6 +130,22 @@
             </div>
           </div>
 
+          <!-- Delivery Note download (available once delivered) -->
+          <div v-if="['delivered', 'completed'].includes(currentStatus || order.status)" class="card">
+            <h2 class="font-semibold text-gray-900 text-sm mb-3">Documents</h2>
+            <button
+              @click="downloadDeliveryNote"
+              :disabled="pdfLoading"
+              class="w-full text-sm px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11" />
+              </svg>
+              {{ pdfLoading ? 'Downloading…' : 'Delivery Note (PDF)' }}
+            </button>
+            <p v-if="pdfError" class="text-xs text-red-600 mt-2">{{ pdfError }}</p>
+          </div>
+
           <!-- Live delivery info (shown when driver is dispatched) -->
           <div v-if="deliveryInfo" class="card border-l-4 border-blue-500">
             <h2 class="font-semibold text-gray-900 text-sm mb-3">Driver on the way</h2>
@@ -166,6 +182,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useOrdersStore } from '@/stores/orders'
 import { useCustomerChannel, type DeliveryStatusEvent, type OrderStatusEvent } from '@/composables/useCustomerChannel'
+import api from '@/services/api'
 
 const route = useRoute()
 const ordersStore = useOrdersStore()
@@ -175,6 +192,29 @@ const order = computed(() => ordersStore.currentOrder)
 const liveUpdate = ref<string | null>(null)
 const currentStatus = ref<string>('')
 const deliveryInfo = ref<DeliveryStatusEvent | null>(null)
+
+// Delivery note PDF download
+const pdfLoading = ref(false)
+const pdfError = ref('')
+
+async function downloadDeliveryNote() {
+  pdfLoading.value = true
+  pdfError.value = ''
+  try {
+    const orderNumber = route.params.orderNumber as string
+    const response = await api.get(`/orders/${orderNumber}/delivery-note`, { responseType: 'blob' })
+    const url = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `delivery-note-${orderNumber}.pdf`
+    a.click()
+    URL.revokeObjectURL(url)
+  } catch {
+    pdfError.value = 'Failed to download. Please try again.'
+  } finally {
+    pdfLoading.value = false
+  }
+}
 
 // Cancel order state
 const showCancelModal = ref(false)
